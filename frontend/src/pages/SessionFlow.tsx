@@ -84,7 +84,7 @@ const SessionFlow = () => {
     } else {
       setIsSubmitting(true);
       try {
-        const response = await fetch('/api/sessions', {
+        const response = await fetch('/_/backend/api/sessions', {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ metrics, engagementScore, totalTime: Date.now() - startTime })
         });
