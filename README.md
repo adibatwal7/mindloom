@@ -1,58 +1,129 @@
-# MINDLOOM MVP
+<p align="center">
+  <img src="logo.png" alt="MindLoom Logo" width="200" />
+</p>
 
-An AI-enabled early support platform for identifying potential characteristics of Autism Spectrum Disorder (ASD) in children through interactive activities.
+# MindLoom: AI-Enabled Early Support for ASD
+
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![Google MediaPipe](https://img.shields.io/badge/MediaPipe-00796B?style=for-the-badge&logo=google&logoColor=white)](https://developers.google.com/mediapipe)
+
+> **MindLoom** is a privacy-first, AI-driven platform designed to provide early support for identifying potential characteristics of Autism Spectrum Disorder (ASD) in children through interactive activities and behavioral analysis.
+
+---
 
 ## ⚠️ Disclaimer
 **This is a support tool and hackathon MVP, not a medical device. It does not provide medical diagnoses. Please consult a qualified healthcare professional for medical advice.**
 
-## Features
-- **Privacy-First Face Tracking**: On-device FaceMesh via Google MediaPipe tracks engagement metrics without recording or transmitting video.
-- **Interactive Child Flow**: Engaging Emotion Recognition and Behavioral prompts with high-contrast, large-button UI and sunburst reward animations.
-- **Demo Mode**: Easily jump to the end state to review the AI-assisted Parent Dashboard and insights.
-- **FHIR Support**: Export the results to a FHIR-compliant Observation JSON object.
+---
 
-## Tech Stack
-- **Frontend**: React (Vite), TypeScript, Tailwind CSS, Framer Motion
-- **Backend**: Node.js, Express
-- **AI Model**: Google MediaPipe Tasks Vision (`FaceLandmarker`)
+## ✨ Key Features
 
-## Running Locally
+- 👤 **Privacy-First Face Tracking**: Utilizes on-device **Google MediaPipe FaceMesh** to track engagement metrics (eye contact, gaze stability) without recording or transmitting video data.
+- 🎮 **Interactive Child Flow**: Engaging activities including Emotion Recognition and Behavioral prompts, featuring high-contrast UI and responsive animations.
+- 📊 **AI-Assisted Insights**: Generates empathetic parent reports using GPT-4o-mini (via OpenAI API) to interpret engagement metrics.
+- 🏥 **FHIR Integration**: Export session results to FHIR-compliant Observation JSON objects, ensuring interoperability with modern healthcare systems.
+- ⚡ **Demo Mode**: Instant access to end-state dashboards for rapid review and stakeholder presentation.
 
-1. **Install Dependencies**
-   Open two terminal tabs.
+---
 
-   ```sh
-   # Tab 1: Frontend
-   cd frontend
-   npm install
+## 🏗️ Architecture
 
-   # Tab 2: Backend
-   cd backend
-   npm install
-   ```
+```mermaid
+graph TD
+    User((Child)) -->|Interactive Tasks| Frontend[React Frontend]
+    Frontend -->|Camera Stream| MediaPipe[Google MediaPipe FaceMesh]
+    MediaPipe -->|Engagement Metrics| Frontend
+    Frontend -->|Session Data| Backend[Node.js/Express Backend]
+    Backend -->|GPT-4o / Heuristics| Report[Empathetic Report]
+    Backend -->|FHIR Standards| FHIR[FHIR Observation JSON]
+    Report --> Dashboard[Parent Dashboard]
+    FHIR --> EHR[External Health Systems]
+```
 
-2. **Start the Development Servers**
-   
-   ```sh
-   # Tab 1: Frontend
-   npm run dev
+---
 
-   # Tab 2: Backend
-   npm run dev
-   ```
+## 🛠️ Tech Stack
 
-3. **Usage**
-   Navigate to `http://localhost:5173`
-   Allow Camera access to see the tracking engagement in the Session Flow. Or click "Run Demo Mode" on the landing page for immediate mock results.
+- **Frontend**: React (Vite), TypeScript, Tailwind CSS, Framer Motion, Lucide React
+- **Backend**: Node.js, Express, TypeScript
+- **AI/ML**: Google MediaPipe FaceLandmarker
+- **API Integration**: OpenAI API (for report generation)
 
-## Optional: Claude API Integration (Bonus)
-If you want to use the real Anthropic Claude API to generate empathetic parent reports based on the metrics:
-1. Open the `backend/.env` file.
-2. Replace `your_api_key_here` with your actual Anthropic API key (`CLAUDE_API_KEY=sk-...`).
-3. In `backend/server.ts`, uncomment the marked `fetch` block inside the `/api/sessions` endpoint.
-4. Restart your backend server.
+---
 
-## Limitations (Hackathon Scope)
-- "Claude" report is mocked locally based on a simple heuristic algorithm.
-- Face Tracking calculates a naive engagement proxy (number of detected faces and continuous presence) rather than deep psychological models.
-- Backend handles session saves statelessly without a database to optimize for rapid deployment.
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (v18+)
+- npm or yarn
+- A modern web browser with camera access
+
+### 1. Installation
+Clone the repository and install dependencies in both frontend and backend directories:
+
+```bash
+# Clone the repository
+git clone https://github.com/adibatwal7/mindloom.git
+cd mindloom
+
+# Install Frontend Dependencies
+cd frontend
+npm install
+
+# Install Backend Dependencies
+cd ../backend
+npm install
+```
+
+### 2. Configuration
+To enable AI-generated reports, add your OpenAI API key to the backend `.env` file:
+
+1. Create/Open `backend/.env`
+2. Add your key: `CLAUDE_API_KEY=your_openai_api_key_here`
+   *(Note: The environment variable name remains `CLAUDE_API_KEY` for legacy compatibility, but the backend now uses OpenAI's GPT-4o-mini).*
+
+### 3. Running Locally
+Start both the frontend and backend development servers:
+
+```bash
+# Terminal 1: Frontend
+cd frontend
+npm run dev
+
+# Terminal 2: Backend
+cd backend
+npm run dev
+```
+
+Navigate to `http://localhost:5173` to start using MindLoom.
+
+---
+
+## 📋 Limitations (Hackathon Scope)
+
+- **Heuristic-Based Analysis**: Engagement scores are currently calculated using naive proxies (presence and stability) rather than clinical psychological models.
+- **Stateless Backend**: Session data is handled in-memory or exported, with no persistent database integration for this MVP.
+- **Device Support**: Optimized for desktop browsers with integrated webcams; mobile responsiveness is in early beta.
+
+---
+
+## 🗺️ Roadmap
+
+- [ ] Persistent Database Integration (Supabase/PostgreSQL)
+- [ ] Longitudinal Tracking across multiple sessions
+- [ ] Integration with more clinical screening frameworks (M-CHAT, etc.)
+- [ ] Multi-Modal Analysis (Audio/Prosody detection)
+
+---
+
+## 📄 License
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+<p align="center">
+  Built with ❤️ for better early childhood support.
+</p>
