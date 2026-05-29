@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="logo.png" alt="MindLoom Logo" width="200" />
+  <img src="frontend/public/assets/logo.png" alt="MindLoom Logo" width="200" />
 </p>
 
 # MindLoom: AI-Enabled Early Support for ASD
@@ -42,6 +42,17 @@ graph TD
     Report --> Dashboard[Parent Dashboard]
     FHIR --> EHR[External Health Systems]
 ```
+
+---
+
+## 📂 Repository Structure
+
+The repository is structured as a clean, production-ready workspace:
+
+- **[frontend/](file:///Users/adityabatwal/Desktop/Computer%20Science/MindLoom/frontend)**: Client-side React (Vite) + TypeScript application. Features Google MediaPipe FaceMesh for local eye tracking, custom activities, and parent dashboard.
+- **[backend/](file:///Users/adityabatwal/Desktop/Computer%20Science/MindLoom/backend)**: Server-side Node.js + Express + TypeScript app. Implements metric scoring heuristics and triggers empathetic report generation using the OpenAI API.
+- **[api/](file:///Users/adityabatwal/Desktop/Computer%20Science/MindLoom/api)**: Serverless endpoint delegating requests to the Express server for Vercel deployment.
+- **[vercel.json](file:///Users/adityabatwal/Desktop/Computer%20Science/MindLoom/vercel.json)**: Global configuration routing frontend and backend services on Vercel.
 
 ---
 
